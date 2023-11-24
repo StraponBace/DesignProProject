@@ -49,9 +49,9 @@ def request_add(request):
     if request.method == 'POST':
         form = RequestCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            request = form.save(commit=False)
-            request.user = request.user
-            request.save()
+            request_save = form.save(commit=False)
+            request_save.user = request.user
+            request_save.save()
             return redirect('profile')
     else:
         form = RequestCreateForm(initial={'user': request.user.pk})
@@ -59,9 +59,9 @@ def request_add(request):
 
 @login_required
 def request_delete(request, pk):
-    request = Request.objects.get(id=pk)
-    if request.status == 'Н':
-        return render(request, 'request_delete_confirm.html', {'request': request})
+    request_obj = Request.objects.get(id=pk)
+    if request_obj.status == 'Н':
+        return render(request, 'request_delete_confirm.html', {'request': request_obj})
 
 @login_required
 def request_delete_confirm(request, pk):
@@ -71,7 +71,7 @@ def request_delete_confirm(request, pk):
 
 @login_required
 def requests(request):
-    new_requests = Request.objects.filter(status='N')
+    new_requests = Request.objects.filter(status='Н')
     context = {'new_requests': new_requests}
     return render(request, 'requests.html', context)
 

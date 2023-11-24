@@ -5,7 +5,7 @@ from .models import *
 
 
 class SignUpForm(UserCreationForm):
-    fio = forms.CharField(widget=forms.TextInput, label='ФИО', help_text='Только кириллические буквы, дефис и пробелы',
+    fio = forms.CharField(widget=forms.TextInput, label='ФИО', help_text='Только буквы кириллицы, дефис и пробелы',
                           validators=[RegexValidator('^[а-яА-ЯёЁ-]+\s+[а-яА-ЯёЁ-]+\s+[а-яА-ЯёЁ-]', message="Неправильное ФИО, пожалуйста, попробуйте снова.")],
                           required=True)
     username = forms.CharField(label='Логин', widget=forms.TextInput, help_text='Только латиница и дефис, уникальный', required=True,
